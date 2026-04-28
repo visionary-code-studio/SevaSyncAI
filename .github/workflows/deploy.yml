@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 env:
-  PROJECT_ID: sevasync-ai-bf2bd
+  PROJECT_ID: sevasync-2026
   REGION: us-central1
 
 jobs:
