@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+google-cloud-aiplatform
+google-genai
+firebase-admin
+google-cloud-vision
+python-dotenv
+numpy
