@@ -1,4 +1,4 @@
-🚀 SevaSync AI
+##🚀 SevaSync AI
 
 Making Every Need Visible | Smart Resource Allocation for Social Impact
 
@@ -82,8 +82,8 @@ Upload → Extract → Visualize → Match → Dispatch
 💰 Cost Overview
 🟢 Prototype: ₹0 (Free tier / credits)
 🟡 Functional MVP: ₹6K – ₹15K/month
-🔵 Scalable Deployment: ₹15K+ / month                                                                         📸 Demo
-
+🔵 Scalable Deployment: ₹15K+ / month                                                                         
+##📸 Demo
 🎥 Demo Video: (Add link)
 🌐 Live Demo: (Add link)
 
