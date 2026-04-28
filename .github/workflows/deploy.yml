@@ -1,0 +1,61 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  PROJECT_ID: sevasync-ai-bf2bd
+  REGION: us-central1
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Build and Deploy Backend
+      run: |
+        cd backend
+        gcloud run deploy sevasync-backend \
+          --source . \
+          --region ${{ env.REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars="GOOGLE_CLOUD_PROJECT=${{ env.PROJECT_ID }}"
+
+  deploy-frontend:
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Get Backend URL
+      id: backend_url
+      run: |
+        URL=$(gcloud run services describe sevasync-backend --region ${{ env.REGION }} --format 'value(status.url)')
+        echo "url=$URL" >> $GITHUB_OUTPUT
+
+    - name: Build and Deploy Frontend
+      run: |
+        cd frontend
+        gcloud run deploy sevasync-frontend \
+          --source . \
+          --region ${{ env.REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars="NEXT_PUBLIC_API_BASE_URL=${{ steps.backend_url.outputs.url }}"
